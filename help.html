@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>帮助与 FAQ</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #F5F7FA;
+    color: #333333;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* 顶部导航 */
+  .navbar {
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+
+  .nav-brand {
+    font-size: 20px;
+    font-weight: bold;
+    color: #4A90E2;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-brand:hover {
+    color: #357ABD;
+  }
+
+  .nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+  }
+
+  .nav-menu a {
+    color: #333333;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .nav-menu a:hover {
+    background-color: #F5F7FA;
+    color: #4A90E2;
+  }
+
+  .nav-menu a.active {
+    background-color: #4A90E2;
+    color: #FFFFFF;
+  }
+
+  /* 移动端菜单按钮 */
+  .mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    min-width: 48px;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobile-menu-btn:hover {
+    background-color: #F5F7FA;
+  }
+
+  .hamburger {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: #333333;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger::before,
+  .hamburger::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 2px;
+    background-color: #333333;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger::before {
+    top: -7px;
+  }
+
+  .hamburger::after {
+    top: 7px;
+  }
+
+  /* 页头 */
+  .page-header {
+    background: linear-gradient(135deg, #4A90E2 0%, #50E3C2 100%);
+    padding: 40px 16px;
+    text-align: center;
+    color: #FFFFFF;
+  }
+
+  .page-header h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+
+  .page-header p {
+    font-size: 16px;
+    opacity: 0.9;
+  }
+
+  /* 主容器 */
+  .main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 16px;
+  }
+
+  /* 卡片样式 */
+  .card {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    margin-bottom: 16px;
+  }
+
+  /* 按钮样式 */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    min-height: 48px;
+  }
+
+  .btn-primary {
+    background-color: #4A90E2;
+    color: #FFFFFF;
+  }
+
+  .btn-primary:hover {
+    background-color: #357ABD;
+  }
+
+  .btn-secondary {
+    background-color: #50E3C2;
+    color: #FFFFFF;
+  }
+
+  .btn-secondary:hover {
+    background-color: #3DB89E;
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    border: 2px solid #4A90E2;
+    color: #4A90E2;
+  }
+
+  .btn-outline:hover {
+    background-color: #4A90E2;
+    color: #FFFFFF;
+  }
+
+  /* 响应式设计 */
+  @media (max-width: 768px) {
+    .nav-container {
+      height: 56px;
+    }
+
+    .nav-brand {
+      font-size: 18px;
+    }
+
+    .mobile-menu-btn {
+      display: flex;
+    }
+
+    .nav-menu {
+      display: none;
+      position: absolute;
+      top: 56px;
+      left: 0;
+      right: 0;
+      background-color: #FFFFFF;
+      flex-direction: column;
+      padding: 8px 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-top: 1px solid #F5F7FA;
+    }
+
+    .nav-menu.active {
+      display: flex;
+    }
+
+    .nav-menu a {
+      padding: 14px 24px;
+      width: 100%;
+      text-align: left;
+      border-radius: 0;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+    }
+
+    .page-header {
+      padding: 32px 16px;
+    }
+
+    .page-header h1 {
+      font-size: 24px;
+    }
+
+    .page-header p {
+      font-size: 14px;
+    }
+
+    .main-container {
+      padding: 16px 12px;
+    }
+
+    .card {
+      padding: 16px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .nav-container {
+      padding: 0 12px;
+    }
+
+    .page-header h1 {
+      font-size: 20px;
+    }
+
+    .btn {
+      width: 100%;
+    }
+  }
+</style>
+<meta name="description" content="常见问题解答、使用教程、隐私说明；提供反馈入口。"><meta name="keywords" content="QR码,生成器,批量生成,历史记录,设置,帮助,API演示,在线预览"><meta name="robots" content="index,follow,max-image-preview:large"><meta property="og:type" content="website"><meta property="og:title" content="帮助与 FAQ"><meta property="og:description" content="常见问题解答、使用教程、隐私说明；提供反馈入口。"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="帮助与 FAQ"><meta name="twitter:description" content="常见问题解答、使用教程、隐私说明；提供反馈入口。"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"帮助与 FAQ","description":"常见问题解答、使用教程、隐私说明；提供反馈入口。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script><style data-a2a="basecss">*,*::before,*::after{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0}img,canvas,svg,video,table{max-width:100%;height:auto}pre,code{white-space:pre-wrap;word-break:break-word}[data-a2a="header"]{width:100%}@media(max-width:640px){body{font-size:15px}}</style></head>
+<body>
+
+<!-- 顶部导航 -->
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-brand">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M3 11h8V3H3v8zm2-6h4v4H5V5zM3 21h8v-8H3v8zm2-6h4v4H5v-4zm8-12v8h8V3h-8zm6 6h-4V5h4v4zm-6 12h2v-2h-2v2zm2-4h2v-2h-2v2zm2 2h2v-2h-2v2zm2 2h2v-2h-2v2zm0-6h2v-2h-2v2zm-4 0h2v-2h-2v2z"/>
+      </svg>
+      QR码生成器
+    </a>
+    <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="菜单">
+      <span class="hamburger"></span>
+    </button>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="index.html">首页</a></li>
+      <li><a href="generate.html">在线生成</a></li>
+      <li><a href="batch.html">批量生成</a></li>
+      <li><a href="edit.html">编辑二维码</a></li>
+      <li><a href="history.html">我的记录</a></li>
+      <li><a href="api.html">API演示</a></li>
+      <li><a href="settings.html">设置</a></li>
+      <li><a href="help.html">帮助</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- 页头 -->
+<header class="page-header">
+  <h1>QR码生成器</h1>
+  <p>快速、简单、免费的二维码生成工具</p>
+</header>
+
+<!-- 主容器 -->
+<main class="main-container">
+  
+<!-- 主容器内容 -->
+<div class="card">
+  <h2 style="margin-bottom: 0.75rem; font-size: 1.5rem;">帮助与 FAQ</h2>
+  
+  <div class="card" style="margin-bottom: 1rem;">
+    <h3 class="card-title" style="margin-bottom: 0.5rem; font-size: 1.25rem;">常见问题</h3>
+    <div id="faq-list">
+      <button type="button" class="btn btn-outline" style="width: 100%; text-align: left; padding: 0.75rem 1rem; margin-bottom: 0.25rem;" onclick="toggleFaq(this)">如何生成二维码？</button>
+      <div style="display: none; padding: 0 1rem 1rem 1rem; line-height: 1.5;">在<a href="generate.html">在线生成二维码</a>页面中，输入文本，选择尺寸、颜色和容错率，点击「生成」按钮即可获得二维码预览，随后点击「下载」保存为 PNG。</div>
+
+      <button type="button" class="btn btn-outline" style="width: 100%; text-align: left; padding: 0.75rem 1rem; margin-bottom: 0.25rem;" onclick="toggleFaq(this)">历史记录在哪里查看？</button>
+      <div style="display: none; padding: 0 1rem 1rem 1rem; line-height: 1.5;">访问<a href="history.html">我的记录</a>页面，即可查看之前生成的所有二维码，支持下载、删除和编辑。</div>
+
+      <button type="button" class="btn btn-outline" style="width: 100%; text-align: left; padding: 0.75rem 1rem; margin-bottom: 0.25rem;" onclick="toggleFaq(this)">如何进行批量生成？</button>
+      <div style="display: none; padding: 0 1rem 1rem 1rem; line-height: 1.5;">在<a href="batch.html">批量生成二维码</a>页面中，上传 CSV 或 Excel 文件，系统将解析每行内容并生成对应二维码，预览前几张后可打包下载。</div>
+
+      <button type="button" class="btn btn-outline" style="width: 100%; text-align: left; padding: 0.75rem 1rem; margin-bottom: 0.25rem;" onclick="toggleFaq(this)">二维码生成是否安全？</button>
+      <div style="display: none; padding: 0 1rem 1rem 1rem; line-height: 1.5;">本工具完全在浏览器本地运行，所有数据不会上传到服务器，详情请查看<a href="#privacy">隐私说明</a>。</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom: 1rem;">
+    <h3 class="card-title" style="margin-bottom: 0.5rem; font-size: 1.25rem;">使用教程</h3>
+    <ul style="line-height: 1.8; padding-left: 1.5rem;">
+      <li>访问<a href="generate.html">在线生成二维码</a>页面</li>
+      <li>输入需要生成二维码的文本内容</li>
+      <li>根据需求调整尺寸、颜色和容错率</li>
+      <li>点击「生成二维码」按钮</li>
+      <li>预览无误后点击「下载」保存</li>
+    </ul>
+  </div>
+
+  <div class="card" id="privacy">
+    <h3 class="card-title" style="margin-bottom: 0.5rem; font-size: 1.25rem;">隐私说明</h3>
+    <p style="line-height: 1.8; margin-bottom: 1rem;">本二维码生成工具完全在浏览器本地运行，所有数据均存储在本地，不会上传至服务器。生成的二维码内容仅在用户本地处理，不涉及任何网络传输。</p>
+    <p style="line-height: 1.8;">历史记录存储在浏览器的 localStorage 中，仅在用户本机可访问。</p>
+  </div>
+
+  <div class="card">
+    <h3 class="card-title" style="margin-bottom: 0.5rem; font-size: 1.25rem;">反馈与支持</h3>
+    <p style="line-height: 1.8; margin-bottom: 1rem;">如果您在使用过程中遇到任何问题，或有功能建议，欢迎通过以下方式联系我们：</p>
+    <a href="mailto:support@example.com" class="btn btn-primary">发送反馈邮件</a>
+  </div>
+</div>
+
+<script>
+  function toggleFaq(button) {
+    const answer = button.nextElementSibling;
+    if (answer.style.display === 'block') {
+      answer.style.display = 'none';
+      button.style.background = '';
+    } else {
+      answer.style.display = 'block';
+      button.style.background = '#f5f7fa';
+    }
+  }
+</script>
+
+</main>
+
+<script>
+  function toggleMenu() {
+    const navMenu = document.getElementById('navMenu');
+    navMenu.classList.toggle('active');
+  }
+
+  // 点击外部关闭菜单
+  document.addEventListener('click', function(e) {
+    const navMenu = document.getElementById('navMenu');
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    if (!navMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+      navMenu.classList.remove('active');
+    }
+  });
+
+  // 当前页面导航高亮
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-menu a').forEach(link => {
+    if (link.getAttribute('href') === currentPage) {
+      link.classList.add('active');
+    }
+  });
+</script>
+
+<footer data-a2a="footer" style="margin-top:48px;padding:28px 16px;border-top:1px solid rgba(127,127,127,.16);text-align:center;font-family:system-ui,-apple-system,'PingFang SC',sans-serif;line-height:1.9;color:#8a8f99;background:transparent"><a href="https://www.autoa2a.org" target="_blank" rel="noopener" style="display:inline-block;margin-bottom:10px"><img src="https://agent.oagi.com.cn/uploads/202606/29ea3ed5413830b3.png" alt="AutoA2A" style="height:36px;vertical-align:middle;border:0"></a><div style="font-size:13.5px;color:#6b7280;max-width:760px;margin:0 auto 6px">✅️ <b>AutoA2A</b> · 智能体互连 Agent to Agent 平台——让智能体无缝发现、协商、协作与安全交换数据，开启 AI 即服务新时代。</div><div style="font-size:13px">本网站由 <a href="https://www.autoa2a.org" target="_blank" rel="noopener" style="color:#f2603c;text-decoration:none;font-weight:600">www.autoa2a.org</a> 多个 AI 协作生成</div><div style="font-size:12px;color:#aab;margin-top:6px">Copyright © 2025 - 2026 AutoA2A. All Rights Reserved. A2A版权所有</div></footer></body>
+</html>
