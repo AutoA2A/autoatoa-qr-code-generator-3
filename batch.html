@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>批量生成二维码</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #F5F7FA;
+    color: #333333;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* 顶部导航 */
+  .navbar {
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+
+  .nav-brand {
+    font-size: 20px;
+    font-weight: bold;
+    color: #4A90E2;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-brand:hover {
+    color: #357ABD;
+  }
+
+  .nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+  }
+
+  .nav-menu a {
+    color: #333333;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .nav-menu a:hover {
+    background-color: #F5F7FA;
+    color: #4A90E2;
+  }
+
+  .nav-menu a.active {
+    background-color: #4A90E2;
+    color: #FFFFFF;
+  }
+
+  /* 移动端菜单按钮 */
+  .mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    min-width: 48px;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobile-menu-btn:hover {
+    background-color: #F5F7FA;
+  }
+
+  .hamburger {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: #333333;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger::before,
+  .hamburger::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 2px;
+    background-color: #333333;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger::before {
+    top: -7px;
+  }
+
+  .hamburger::after {
+    top: 7px;
+  }
+
+  /* 页头 */
+  .page-header {
+    background: linear-gradient(135deg, #4A90E2 0%, #50E3C2 100%);
+    padding: 40px 16px;
+    text-align: center;
+    color: #FFFFFF;
+  }
+
+  .page-header h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+
+  .page-header p {
+    font-size: 16px;
+    opacity: 0.9;
+  }
+
+  /* 主容器 */
+  .main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 16px;
+  }
+
+  /* 卡片样式 */
+  .card {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    margin-bottom: 16px;
+  }
+
+  /* 按钮样式 */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    min-height: 48px;
+  }
+
+  .btn-primary {
+    background-color: #4A90E2;
+    color: #FFFFFF;
+  }
+
+  .btn-primary:hover {
+    background-color: #357ABD;
+  }
+
+  .btn-secondary {
+    background-color: #50E3C2;
+    color: #FFFFFF;
+  }
+
+  .btn-secondary:hover {
+    background-color: #3DB89E;
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    border: 2px solid #4A90E2;
+    color: #4A90E2;
+  }
+
+  .btn-outline:hover {
+    background-color: #4A90E2;
+    color: #FFFFFF;
+  }
+
+  /* 响应式设计 */
+  @media (max-width: 768px) {
+    .nav-container {
+      height: 56px;
+    }
+
+    .nav-brand {
+      font-size: 18px;
+    }
+
+    .mobile-menu-btn {
+      display: flex;
+    }
+
+    .nav-menu {
+      display: none;
+      position: absolute;
+      top: 56px;
+      left: 0;
+      right: 0;
+      background-color: #FFFFFF;
+      flex-direction: column;
+      padding: 8px 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-top: 1px solid #F5F7FA;
+    }
+
+    .nav-menu.active {
+      display: flex;
+    }
+
+    .nav-menu a {
+      padding: 14px 24px;
+      width: 100%;
+      text-align: left;
+      border-radius: 0;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+    }
+
+    .page-header {
+      padding: 32px 16px;
+    }
+
+    .page-header h1 {
+      font-size: 24px;
+    }
+
+    .page-header p {
+      font-size: 14px;
+    }
+
+    .main-container {
+      padding: 16px 12px;
+    }
+
+    .card {
+      padding: 16px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .nav-container {
+      padding: 0 12px;
+    }
+
+    .page-header h1 {
+      font-size: 20px;
+    }
+
+    .btn {
+      width: 100%;
+    }
+  }
+</style>
+<meta name="description" content="上传 CSV 或 Excel 文件，解析每行内容生成对应二维码，预览前几张，提供打包下载（JSZip）。"><meta name="keywords" content="QR码,生成器,批量生成,历史记录,设置,帮助,API演示,在线预览"><meta name="robots" content="index,follow,max-image-preview:large"><meta property="og:type" content="website"><meta property="og:title" content="批量生成二维码"><meta property="og:description" content="上传 CSV 或 Excel 文件，解析每行内容生成对应二维码，预览前几张，提供打包下载（JSZip）。"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="批量生成二维码"><meta name="twitter:description" content="上传 CSV 或 Excel 文件，解析每行内容生成对应二维码，预览前几张，提供打包下载（JSZip）。"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"批量生成二维码","description":"上传 CSV 或 Excel 文件，解析每行内容生成对应二维码，预览前几张，提供打包下载（JSZip）。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script><style data-a2a="basecss">*,*::before,*::after{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0}img,canvas,svg,video,table{max-width:100%;height:auto}pre,code{white-space:pre-wrap;word-break:break-word}[data-a2a="header"]{width:100%}@media(max-width:640px){body{font-size:15px}}</style></head>
+<body>
+
+<!-- 顶部导航 -->
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-brand">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M3 11h8V3H3v8zm2-6h4v4H5V5zM3 21h8v-8H3v8zm2-6h4v4H5v-4zm8-12v8h8V3h-8zm6 6h-4V5h4v4zm-6 12h2v-2h-2v2zm2-4h2v-2h-2v2zm2 2h2v-2h-2v2zm2 2h2v-2h-2v2zm0-6h2v-2h-2v2zm-4 0h2v-2h-2v2z"/>
+      </svg>
+      QR码生成器
+    </a>
+    <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="菜单">
+      <span class="hamburger"></span>
+    </button>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="index.html">首页</a></li>
+      <li><a href="generate.html">在线生成</a></li>
+      <li><a href="batch.html">批量生成</a></li>
+      <li><a href="edit.html">编辑二维码</a></li>
+      <li><a href="history.html">我的记录</a></li>
+      <li><a href="api.html">API演示</a></li>
+      <li><a href="settings.html">设置</a></li>
+      <li><a href="help.html">帮助</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- 页头 -->
+<header class="page-header">
+  <h1>QR码生成器</h1>
+  <p>快速、简单、免费的二维码生成工具</p>
+</header>
+
+<!-- 主容器 -->
+<main class="main-container">
+  
+<main class="main-container">
+  <div class="card">
+    <h2>批量生成二维码</h2>
+    <p>上传CSV或Excel文件，系统将自动解析每行内容生成对应的二维码，并提供预览和打包下载功能。</p>
+    <input type="file" id="fileInput" accept=".csv, .xlsx, .xls" />
+    <button class="btn btn-primary" id="uploadBtn">上传文件并生成二维码</button>
+    <div id="previewContainer"></div>
+    <button class="btn btn-secondary" id="downloadBtn" style="display: none;">打包下载二维码</button>
+  </div>
+</main>
+
+<script>
+  document.getElementById('uploadBtn').addEventListener('click', function() {
+    const fileInput = document.getElementById('fileInput');
+    const file = fileInput.files[0];
+    if (!file) {
+      alert('请先选择文件');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const data = new Uint8Array(e.target.result);
+      let workbook;
+      if (file.name.endsWith('.csv')) {
+        // 处理CSV文件
+        const csvData = new TextDecoder().decode(data);
+        const rows = csvData.split('\n').map(row => row.trim()).filter(row => row);
+        generateQRcodes(rows);
+      } else {
+        // 处理Excel文件
+        const XLSX = window.XLSX; // 确保XLSX在全局作用域可用
+        workbook = XLSX.read(data, { type: 'array' });
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+        const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+        generateQRcodes(jsonData.map(row => row.join(',')));
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  });
+
+  function generateQRcodes(data) {
+    const previewContainer = document.getElementById('previewContainer');
+    previewContainer.innerHTML = '';
+    data.slice(0, 5).forEach((text, index) => { // 预览前5条数据
+      const qrCodeContainer = document.createElement('div');
+      qrCodeContainer.style.margin = '10px';
+      const qrCode = new QRCode(qrCodeContainer, {
+        text: text,
+        width: 128,
+        height: 128,
+        colorDark: '#000000',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.H
+      });
+      previewContainer.appendChild(qrCodeContainer);
+    });
+    document.getElementById('downloadBtn').style.display = 'inline-block';
+    document.getElementById('downloadBtn').onclick = function() {
+      downloadQRcodesAsZip(data);
+    };
+  }
+
+  function downloadQRcodesAsZip(data) {
+    const zip = new JSZip();
+    data.forEach((text, index) => {
+      const qrCodeCanvas = document.createElement('canvas');
+      QRCode.toCanvas(qrCodeCanvas, text, { width: 256, height: 256 }, function(error) {
+        if (error) console.error(error);
+      });
+      zip.file(`qrcode_${index + 1}.png`, qrCodeCanvas.toDataURL().split(',')[1], { base64: true });
+    });
+    zip.generateAsync({ type: 'blob' }).then(function(content) {
+      saveAs(content, 'qrcodes.zip');
+    });
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+</main>
+
+<script>
+  function toggleMenu() {
+    const navMenu = document.getElementById('navMenu');
+    navMenu.classList.toggle('active');
+  }
+
+  // 点击外部关闭菜单
+  document.addEventListener('click', function(e) {
+    const navMenu = document.getElementById('navMenu');
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    if (!navMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+      navMenu.classList.remove('active');
+    }
+  });
+
+  // 当前页面导航高亮
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-menu a').forEach(link => {
+    if (link.getAttribute('href') === currentPage) {
+      link.classList.add('active');
+    }
+  });
+</script>
+
+<footer data-a2a="footer" style="margin-top:48px;padding:28px 16px;border-top:1px solid rgba(127,127,127,.16);text-align:center;font-family:system-ui,-apple-system,'PingFang SC',sans-serif;line-height:1.9;color:#8a8f99;background:transparent"><a href="https://www.autoa2a.org" target="_blank" rel="noopener" style="display:inline-block;margin-bottom:10px"><img src="https://agent.oagi.com.cn/uploads/202606/29ea3ed5413830b3.png" alt="AutoA2A" style="height:36px;vertical-align:middle;border:0"></a><div style="font-size:13.5px;color:#6b7280;max-width:760px;margin:0 auto 6px">✅️ <b>AutoA2A</b> · 智能体互连 Agent to Agent 平台——让智能体无缝发现、协商、协作与安全交换数据，开启 AI 即服务新时代。</div><div style="font-size:13px">本网站由 <a href="https://www.autoa2a.org" target="_blank" rel="noopener" style="color:#f2603c;text-decoration:none;font-weight:600">www.autoa2a.org</a> 多个 AI 协作生成</div><div style="font-size:12px;color:#aab;margin-top:6px">Copyright © 2025 - 2026 AutoA2A. All Rights Reserved. A2A版权所有</div></footer></body>
+</html>
